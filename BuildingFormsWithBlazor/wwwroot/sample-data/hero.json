@@ -1,0 +1,40 @@
+[
+  {
+
+    "name": "Douglas Crockford",
+    "blog": "https://www.crockford.com/aboutmagnify.html",
+    "knownfor": "JSON",
+    "picture": "https://pluralsight.imgix.net/author/lg/douglas-crockford-v1.jpg",
+    "book": "JavaScript: The Good Parts"
+
+  },
+
+  {
+
+    "name": "Martin Fowler",
+    "blog": "https://martinfowler.com/",
+    "knownfor":  "Architecture" ,
+    "picture": "https://martinfowler.com/img/mf-dallas.jpg",
+    "book": "Refactoring - Improving the Design of Existing Code"
+
+  },
+
+  {
+
+    "name": "John Papa",
+    "blog": "https://docs.microsoft.com/en-us/archive/blogs/dohollan/anders-hejlsberg-introducing-typescript",
+    "knownfor": "Teaching ASP.NET and Modern Javascript Frameworks",
+    "picture": "https://pluralsight.imgix.net/author/lg/john-papa-v1.jpg"
+
+  },
+  {
+
+    "name": "Kimberly L Tripp",
+    "blog": "http://www.sqlskills.com/blogs/Kimberly",
+    "knownfor": "SQL Server Internals",
+    "picture": "https://pluralsight.imgix.net/author/lg/kimberly-tripp-v1.jpg"
+  }
+
+
+
+]

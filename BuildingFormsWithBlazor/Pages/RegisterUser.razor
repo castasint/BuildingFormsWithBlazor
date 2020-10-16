@@ -1,0 +1,120 @@
+﻿@page "/users"
+@using BuildingFormsWithBlazor.DataStructures
+
+
+<h2 class="text text-info font-weight-bold">User Count : @Users.Count </h2>
+
+
+    <EditForm Model="user" OnValidSubmit="AddNewUser" class="mt-2">
+
+        <div class="form-group col-12 row">
+
+            <label class="font-weight-bold col-2">First Name </label>
+            <InputText class="form-control col-3" @bind-Value="user.FirstName" />
+        </div>
+
+        <div class="form-group col-12 row">
+
+            <label class="font-weight-bold col-2">Last Name </label>
+            <InputText class="form-control col-3" @bind-Value="user.LastName" />
+        </div>
+
+        <div class="form-group col-12 row">
+
+            <label class="font-weight-bold col-2">Email </label>
+            <InputText class="form-control col-3" @bind-Value="user.Email" />
+        </div>
+        <div class="form-group col-12 row">
+
+            <label class="font-weight-bold col-2">BirthDay </label>
+            <InputDate class="form-control col-3" @bind-Value="user.DateOfBirth" />
+        </div>
+        <div class="form-group col-12 row">
+
+            <label class="font-weight-bold col-2">IsActive </label>
+            <InputCheckbox class="form-control col-1" @bind-Value="user.IsActive" />
+        </div>
+        <div class="form-group col-12 row">
+
+            <label class="font-weight-bold col-2">City </label>
+            <InputText class="form-control col-3" @bind-Value="user.City" />
+        </div>
+        <button type="submit" class="btn  btn-outline-primary ">Add User</button>
+    </EditForm>
+
+
+
+
+
+
+<table class="table table-sm table-bordered mt-3">
+    <caption>List of users</caption>
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                First Name
+            </th>
+            <th scope="col">
+                Last Name
+            </th>
+            <th scope="col">
+                DateOfBirth
+            </th>
+            <th scope="col">
+                IsActive
+            </th>
+            <th scope="col">
+                Email
+            </th>
+            <th scope="col">
+                City
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var myuser in Users)
+        {
+            <tr scope="row">
+
+                <td>@myuser.FirstName</td>
+                <td>@myuser.LastName</td>
+                <td>@myuser.DateOfBirth</td>
+                <td>@myuser.IsActive</td>
+                <td>@myuser.Email</td>
+                <td>@myuser.City</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+
+@code {
+
+
+    private User user;
+    private List<User> Users;
+    private int count = 0;
+
+    protected override Task OnInitializedAsync()
+    {
+        user = new User();
+        Users = new List<User>();
+
+        Users = BuildingFormsWithBlazor.Services.UserService.GetUsers();
+        return base.OnInitializedAsync();
+    }
+
+    private void AddNewUser()
+    {
+
+        BuildingFormsWithBlazor.Services.UserService.AddUser(user);
+        user = new User();
+        Users = BuildingFormsWithBlazor.Services.UserService.GetUsers();
+    }
+
+
+}
