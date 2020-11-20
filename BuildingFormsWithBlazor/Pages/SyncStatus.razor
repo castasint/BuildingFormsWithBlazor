@@ -1,13 +1,5 @@
-﻿@page "/"
-@using BuildingFormsWithBlazor.DataStructures
+﻿
 @inject BuildingFormsWithBlazor.Services.UserService userService
-
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
-
 
 @if (unsavedChanges)
 {
@@ -23,30 +15,22 @@ Welcome to your new app.
     </section>
 }
 
-
-<UserList AppUsers="Users" />
-
-
-@code{
-
+@code {
 
     private bool unsavedChanges = false;
-    private User user;
-    private User[] Users;
-    private int count = 0;
+
+
 
     protected override async Task OnInitializedAsync()
     {
-        user = new User();
-        Users = new User[0];
-        Users = await userService.GetUsersAsync();
         Console.WriteLine("Sync Status - OnInitialized");
         unsavedChanges = await userService.HasUnSavedRecordsinIndexDB();
         Console.WriteLine(unsavedChanges);
         await base.OnInitializedAsync();
     }
 
-    async Task SyncData()
+
+    async  Task  SyncData()
     {
 
         Console.WriteLine("Syncing Data");
@@ -54,9 +38,8 @@ Welcome to your new app.
         await userService.SynchronizeAsync();
 
         unsavedChanges = await userService.HasUnSavedRecordsinIndexDB();
-        Users = await userService.GetUsersAsync();
-
 
 
     }
+
 }

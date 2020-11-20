@@ -1,11 +1,13 @@
 ﻿@page "/users"
 @using BuildingFormsWithBlazor.DataStructures
+@inject BuildingFormsWithBlazor.Services.UserService userService 
+@inject NavigationManager navigationManager
 
 
-<h2 class="text text-info font-weight-bold">User Count : @Users.Count </h2>
 
 
-    <EditForm Model="user" OnValidSubmit="AddNewUser" class="mt-2">
+    <EditForm Model="user" OnValidSubmit="AddNewUser" class="mt-2"  >
+
 
         <div class="form-group col-12 row">
 
@@ -42,53 +44,7 @@
         <button type="submit" class="btn  btn-outline-primary ">Add User</button>
     </EditForm>
 
-
-
-
-
-
-<table class="table table-sm table-bordered mt-3">
-    <caption>List of users</caption>
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">
-                First Name
-            </th>
-            <th scope="col">
-                Last Name
-            </th>
-            <th scope="col">
-                DateOfBirth
-            </th>
-            <th scope="col">
-                IsActive
-            </th>
-            <th scope="col">
-                Email
-            </th>
-            <th scope="col">
-                City
-            </th>
-        </tr>
-    </thead>
-
-    <tbody>
-
-        @foreach (var myuser in Users)
-        {
-            <tr scope="row">
-
-                <td>@myuser.FirstName</td>
-                <td>@myuser.LastName</td>
-                <td>@myuser.DateOfBirth</td>
-                <td>@myuser.IsActive</td>
-                <td>@myuser.Email</td>
-                <td>@myuser.City</td>
-            </tr>
-        }
-    </tbody>
-
-</table>
+<UserList AppUsers="Users" />
 
 
 
@@ -96,24 +52,25 @@
 
 
     private User user;
-    private List<User> Users;
+    private User[] Users;
     private int count = 0;
+    private bool showSpinner = false;
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         user = new User();
-        Users = new List<User>();
-
-        Users = BuildingFormsWithBlazor.Services.UserService.GetUsers();
-        return base.OnInitializedAsync();
+        Users = new User[0];
+        Users = await userService.GetUsersAsync();
+        await base.OnInitializedAsync();
     }
 
-    private void AddNewUser()
+    private async void AddNewUser()
     {
 
-        BuildingFormsWithBlazor.Services.UserService.AddUser(user);
-        user = new User();
-        Users = BuildingFormsWithBlazor.Services.UserService.GetUsers();
+        showSpinner = true;
+        await  userService.AddUser(user);
+       
+        navigationManager.NavigateTo("/");
     }
 
 

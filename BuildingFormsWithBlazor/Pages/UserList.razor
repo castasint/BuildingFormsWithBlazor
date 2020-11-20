@@ -1,0 +1,71 @@
+﻿@using BuildingFormsWithBlazor.DataStructures
+@inject BuildingFormsWithBlazor.Services.UserService userService
+
+
+<h2 class="text text-primary font-weight-bold">User Count : @AppUsers.Length </h2>
+<table class="table table-sm table-bordered mt-3">
+    <caption>List of users</caption>
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                First Name
+            </th>
+            <th scope="col">
+                Last Name
+            </th>
+            <th scope="col">
+                DateOfBirth
+            </th>
+            <th scope="col">
+                IsActive
+            </th>
+            <th scope="col">
+                Email
+            </th>
+            <th scope="col">
+                City
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var myuser in AppUsers)
+        {
+            <tr scope="row">
+
+                <td>@myuser.FirstName</td>
+                <td>@myuser.LastName</td>
+                <td>@myuser.DateOfBirth</td>
+                <td>@myuser.IsActive</td>
+                <td>@myuser.Email</td>
+                <td>@myuser.City</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+
+@code {
+
+
+    [Parameter]
+
+    public User[] AppUsers { get; set; }
+
+    private int count = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+     
+        AppUsers = new User[0];
+        AppUsers = await userService.GetUsersAsync();
+        await base.OnInitializedAsync();
+    }
+
+
+
+
+}
